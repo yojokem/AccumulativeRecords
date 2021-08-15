@@ -1,0 +1,31 @@
+{
+  "name": "SDCircle",
+  "version": "1.0.0",
+  "description": "동아리 수강 신청 프로그램",
+  "main": "main.js",
+  "author": "김민성",
+  "scripts": {
+    "start": "node web"
+  },
+  "dependencies": {
+    "@mysql/xdevapi": "8.0.23",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.6.0",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
+    "ejs": "^3.1.6",
+    "ejs-locals": "^1.0.2",
+    "exceljs": "^4.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "express-mysql-session": "^2.1.5",
+    "formidable": "^1.2.2",
+    "iconv-lite": "^0.6.2",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "normalize.css": "^8.0.1",
+    "react-scripts": "^4.0.3",
+    "sequelize": "^6.5.0"
+  }
+}

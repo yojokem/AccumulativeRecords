@@ -1,0 +1,73 @@
+<div class="col-xs-4 ml-auto">
+    <input type="button" class="btn btn-block btn-primary btn-sm download" target="" value="엑셀" />
+</div>
+<div class="row">
+    <div class="col-xs-8 pb-2 w-50 ml-auto mr-auto float-sm-center pt-5">
+        <table class="table table-striped table-bordered table-hover" style="width: 100%; border-collapse: collapse;">
+            <caption>신청자 명단</caption>
+            <thead>
+                <tr class="text-center">
+                    <th>학번</th>
+                    <th>성명</th>
+                    <th>동아리</th>
+                    <th>인용</th>
+                    <th>취소</th>
+                    <th>신청 시각</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <%
+                    if(targets) for(var i in targets) { let target = targets[i];
+                        {
+                            let GCNS = target.grade + (target.class + "").padStart(2, '0') + (target.number + "").padStart(2, '0');
+                            let name = target.name;
+
+                            let applications = target.applications;
+                            let thisOneHasOne = applications.filter((v, n) => v.unuse == false).length > 0;
+                            for(var e in applications) {
+                                let application = applications[e];
+    
+                                let unuse = application.unuse;
+                                let accept = application.accept;
+
+                                let circle = application.circle.name;
+                %>
+                <tr>
+                    <td onclick="location.href = '/status/s/<%= target.username %>'"><%= GCNS %></td>
+                    <td onclick="location.href = '/status/s/<%= target.username %>'"><%= name %></td>
+                    <td onclick="location.href = '/status/<%= circle %>'"><% if (thisOneHasOne) { %><%= circle %><% } %></td>
+                    <td class="clicks" onclick="location.href = '/force/accept/<% if(thisOneHasOne) { %><%= application.id %><% } %>'">
+                        <%= accept ? "인용" : "미정" %></td>
+                    <td class="clicks" onclick="location.href = '/force/unuse/<% if(thisOneHasOne) { %><%= application.id %><% } %>'">
+                        <%= unuse ? "취소" : "유효" %></td>
+                    <td><%= application.createdAt %></td>
+                </tr>
+                <%
+                                if(!unuse) break;
+                            }
+
+                            if(applications.length == 0) {
+                %>
+                <tr>
+                    <td onclick="location.href = '/status/s/<%= target.username %>'"><%= GCNS %></td>
+                    <td onclick="location.href = '/status/s/<%= target.username %>'"><%= name %></td>
+                    <td></td>
+                    <td class="clicks"></td>
+                    <td class="clicks"></td>
+                    <td></td>
+                </tr>
+                <%
+                            }
+                        }
+                %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    let path = location.pathname;
+    document.getElementsByClassName("download")[0].attributes.target.value = path.substring(path.length - 3, path.length);
+    document.getElementById("_grade").value = Number(path.substring(path.length - 3, path.length - 2));
+    document.getElementById("_class").value = Number(path.substring(path.length - 2, path.length));
+</script>

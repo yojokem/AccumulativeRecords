@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <%- include (includes("head")); %>
+    <style type="text/css">
+        .fix {
+            width: 15rem;
+            height: 0;
+        }
+    </style>
+</head>
+
+<body id="target" class="pt-5">
+    <%- include (includes("header")) %>
+    <div class="container pt-5 ml-auto mr-auto">
+        <% if(APPLIEDONE) { %>
+        <div class="row pb-2 ml-auto">
+            <a href="/unuse" class="btn btn-warning" role="button">
+                취소하기 - `<%= APPLIEDN %>`
+            </a>
+        </div>
+        <% } %>
+        <% if(targets) for(var i in targets) { let target = targets[i]; %>
+        <% if(i % 4 == 0) { %><div class="row pb-2"><% } %>
+            <%
+                limitOption = target.Limit.option;
+                let key = session.grade == 1 ? "first" : session.grade == 2 ? "second" : "third";
+                let gradeLimit = limitOption[key];
+                let vpvp = target.applications.filter((v, n) => v.unuse == false && v.user.grade == session.grade).length < gradeLimit;
+            %>
+            <div class="border col-xs-4 ml-4" style="width: min-content;"
+                <% if(target.active == false) { %>aria-disabled="true" <% } %>>
+                <div class="thumbnail">
+                    <img class="fix" src="/styles/300x200.png" alt="...">
+                    <div class="pr-2 pl-2 pt-1 caption">
+                        <h3 class="pb-2"><%= target.name %></h3><small><%= target.id %></small>
+                        <p><%= target.detail %></p>
+                        <p>
+                            <a href="/apply/<%= target.id %>" class="btn <% if (APPLIEDONE && target.id == APPLIED) { %>btn-success<% } else if ((APPLIEDONE && APPLIED != target.id) || (!APPLIEDONE && !vpvp)) {%>btn-dark<% } else { %>btn-primary<% } %>" role="button" <% if(APPLIEDONE || (!APPLIEDONE && !vpvp)) { %>disabled<% } %>>
+                                <% if(APPLIEDONE) { %>
+                                    <% if(APPLIED == target.id) { %>
+                                        신청 완료
+                                    <% } else { %>
+                                        -
+                                    <% } %>
+                                <% } else {
+                                    if(vpvp) {
+                                %>
+                                    수강 신청
+                                <% } else {%>
+                                    학년 제한
+                                <%} } %>
+                            </a>
+                        </p>
+                        <p>
+                            <small>
+                                <%= target.applications.filter((v, n) => v.unuse == false).length %> 신청 완료&nbsp;
+                                <%= target.maximal %> 최대 인원
+                            </small>
+                            <br />
+                            <small>
+                                1학년 [<%= limitOption['first'] %>] 2학년 [<%= limitOption['second'] %>] 3학년[<%= limitOption['third'] %>]
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <% if((Number(i) + 1) % 4 == 0 || targets.length == Number(i) + 1) { %></div><% } %>
+        <% } %>
+        <div class="row mb-5"></div>
+    </div>
+    <%- include (includes("modal")) %>
+    <%- include (includes("footer")) %>
+</body>
+<%- include (includes("foot")); %>
+
+</html>

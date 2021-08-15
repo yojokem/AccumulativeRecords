@@ -1,0 +1,32 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous">
+</script>
+<script src="/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(() => $("._<%= link %>").addClass("active"));
+  $(document).ready(() => {
+    console.log("이 웹사이트 또는 페이지 전체와 SQL 데이터는 모두 외부로 유출할 수 없으며,");
+    console.log("반출 또는 송출 시에는 내부 관계자가 인쇄한 형태로 날인 또는 서명하여야 합니다.");
+    console.log("또한 이 웹사이트 또는 페이지 전체는 법원 내부 관계자만이 이용할 수 있으며");
+    console.log("열람은 모든 학생회 회원이 가능합니다. 단, 이 사이트는 학교 내에서만 접속할 수 있습니다.");
+    $('#warningMessage').on({
+      show: false
+    }, () => $("#modalMessage").html(""));
+  });
+  if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) == true || /Mobi/i.test(window.navigator.userAgent)){
+    $("div#container").css("transform", "scale(0.6rem)")
+    $("div#container").css("transform", "scale(0.6rem)");
+  }
+  (function ($) {
+    $.postCSRF = async function (to, message, callback) {
+      message._csrf = $('input[name="_csrf"]').val() || $("meta[name='_csrf']").attr("content");
+      return await $.post(to, message, callback);
+    };
+  }(jQuery));
+</script>
+<script type="text/javascript">
+  $(document).keyup(event => {
+    if (event.keyCode == 27) $('#warningMessage').modal({
+      show: false
+    });
+  });
+</script>

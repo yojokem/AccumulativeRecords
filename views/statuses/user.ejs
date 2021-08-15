@@ -1,0 +1,99 @@
+<div class="col-xs-4 ml-auto">
+    <input type="button" class="btn btn-block btn-primary btn-sm download" target="" value="엑셀" />
+</div>
+<div class="row">
+    <div class="col-xs-8 pb-2 w-50 ml-auto mr-auto float-sm-center pt-5">
+        <table class="table table-striped table-bordered table-hover" style="width: 100%; border-collapse: collapse;">
+            <caption>신청자 명단</caption>
+            <thead>
+                <% if (target) { %>
+                <tr>
+                    <span><%= target.grade %>학년 <%= target.class %>반 <%= target.number %>번 <mark><%= target.name %></mark>(<%= target.username %>)</span>
+                </tr>
+                <% } %>
+                <tr class="text-center">
+                    <th>학번</th>
+                    <th>성명</th>
+                    <th>동아리</th>
+                    <th>인용</th>
+                    <th>취소</th>
+                    <th>신청 시각</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <%
+                    if(target) {
+                        {
+                            var ids = target.id;
+                            var _username = target.username;
+                            var _grade = target.grade;
+                            var _class = target.class;
+                            var GCNS = target.grade + (target.class + "").padStart(2, '0') + (target.number + "").padStart(2, '0');
+                            var name = target.name;
+
+                            let applications = target.applications;
+                            let thisOneHasOne = applications.filter((v, n) => v.unuse == false).length > 0;
+
+                            if(thisOneHasOne) var valid = applications.filter((v, n) => v.unuse == false)[0];
+                            let unvalids = applications.filter((v, n) => v.unuse == true);
+                            
+                            if(valid) {
+                                let unuse = valid.unuse;
+                                let accept = valid.accept;
+                            
+                                let circle = valid.circle.name;
+                %>
+                <tr>
+                    <td><%= GCNS %></td>
+                    <td><%= name %></td>
+                    <td onclick="location.href = '/status/<%= circle %>'"><%= circle %></td>
+                    <td class="clicks" onclick="location.href = '/force/accept/<%= valid.id %>'">
+                        <%= accept ? "인용" : "미정" %></td>
+                    <td class="clicks" onclick="location.href = '/force/unuse/<%= valid.id %>'">
+                        <%= unuse ? "취소" : "유효" %></td>
+                    <td><%= valid.createdAt %></td>
+                </tr>
+                <% if (unvalids.length > 0) { %>
+                <tr>
+                    <td colspan="10"></td>
+                </tr>
+                <% } %>
+                <%
+                            }
+                            
+                            if(unvalids.length > 0) {
+                                for(let e of unvalids) {
+                                    let unuse = e.unuse;
+                                    let accept = e.accept;
+                            
+                                    let circle = e.circle.name;
+                %>
+                <tr style="background-color: dimgray">
+                    <td><%= GCNS %></td>
+                    <td><%= name %></td>
+                    <td onclick="location.href = '/status/<%= circle %>'"><%= circle %></td>
+                    <td class="clicks" onclick="location.href = '/force/accept/<%= e.id %>'">
+                        <%= accept ? "인용" : "미정" %></td>
+                    <td class="clicks" onclick="location.href = '/force/unuse/<%= e.id %>'">
+                        <%= unuse ? "취소" : "유효" %></td>
+                    <td><%= e.createdAt %></td>
+                </tr>
+                <%
+                                }
+                            }
+                        }
+                    } else {
+                %>
+                <p>사용자를 찾을 수 없습니다.</p>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    let path = location.pathname;
+    document.getElementsByClassName("download")[0].attributes.target.value = "<%= ids %>";
+    document.getElementById("_grade").value = '<%= _grade %>'
+    document.getElementById("_class").value = '<%= _class  %>'
+    document.getElementById("_username").value = '<%= _username %>'
+</script>

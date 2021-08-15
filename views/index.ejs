@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <%- include (includes("head")); %>
+  </head>
+  <body id="target" class="pt-5">
+    <%- include (includes("header")) %>
+    <div class="container pt-5">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-auto"><p class="h5">소담고등학교 교과 동아리 신청</p></div>
+        </div>
+        <div class="row">
+          <% if(session.login == 1) { %><div class="col-xs-auto">환영합니다. <mark><%= session.nickname %></mark>님.</div><% } %>
+          <div class="col-xs-auto">
+            이 웹사이트는 한국 표준시(KST, UTC +09:00)를 기준으로 작동합니다.<br />
+            이용 시 Chrome, Firefox 등 Chromium 기반 브라우저(MS Edge 제외)를 이용하여 주시기 바랍니다.<br />
+            많고 잦은 트래픽으로 인하여 신청 기간에는 접속이 원활하지 않을 수 있으므로 양해 부탁드리며, <a href="/post" style="text-decoration: none;">[자유 게시판]</a>에서 「개인 정보 처리 방침」과 각 동아리의 신청 관련 안내 등 각종 공지 사항을 열람하실 수 있습니다.<br />
+          </div>
+          <div class="w-100"></div>
+        </div>
+        <% if (APPLIEDONE) { %>
+        <div class="row">
+          <p>귀하는 현재 동아리 <mark><%= APPLIEDN %></mark>에 신청된 상태입니다.</p>
+        </div>
+        <% } else { %>
+        <div class="row">
+          <p>귀하는 신청하신 동아리가 없습니다.</p>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <%- include (includes("modal")) %>
+    <%- include (includes("footer")) %>
+  </body>
+  <%- include (includes("foot")); %>
+</html>

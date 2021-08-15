@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <%- include (includes("head")); %>
+  </head>
+  <body id="target" class="pt-5">
+    <%- include (includes("header")) %>
+    <div class="container pt-5 ml-auto mr-auto">
+      <div class="row" style="overflow-x: auto;">
+        <table class="table table-striped table-bordered table-hover" style="width: 100%; min-width: 400px; border-collapse: collapse;">
+          <caption>직급부 생성·수정</caption>
+          <thead>
+            <tr class="text-center">
+              <th>순번</th>
+              <th>직위도(職位圖)</th>
+              <th>등급</th>
+              <th>허가</th>
+              <th>사용자 번호</th>
+              <th>생성일</th>
+              <th>수정일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(targets) { for(var i in targets) { %>
+              <tr id="target_<%= targets[i].id %>" class="bg-success text-center" style="font-size: 0.9rem;">
+                <td><%= targets[i].id %></td>
+                <td><%= targets[i].rank %></td>
+                <td><%= targets[i].order %></td>
+                <td><%= targets[i].user_id %></td>
+                <% var created = new Date(targets[i].createdAt); %>
+                <td><%= `
+                  ${created.getFullYear().toString().padStart(4, '0')}-${
+                  (created.getMonth()+1).toString().padStart(2, '0')}-${
+                  created.getDate().toString().padStart(2, '0')}
+                   
+                  ${created.getHours().toString().padStart(2, '0')}:${
+                  created.getMinutes().toString().padStart(2, '0')}:${
+                  created.getSeconds().toString().padStart(2, '0')}` %></td>
+                  <% var updated = new Date(targets[i].updatedAt); %>
+                  <td><%= `
+                    ${updated.getFullYear().toString().padStart(4, '0')}-${
+                    (updated.getMonth()+1).toString().padStart(2, '0')}-${
+                    updated.getDate().toString().padStart(2, '0')}
+                     
+                    ${updated.getHours().toString().padStart(2, '0')}:${
+                    updated.getMinutes().toString().padStart(2, '0')}:${
+                    updated.getSeconds().toString().padStart(2, '0')}` %></td>
+                <td><%= targets[i].licensed %></td>
+              </tr>
+              <tr>
+                <td class="text-right" colspan="10">
+                  <div class="col-xs-5 float-sm-right">
+                    <input type="button" class="btn <% if(targets[i].licensed == 1) { %> btn-warning <% } else { %> btn-primary <% } %> btn-block license_btn" aria-label="license" id="license_btn" target="<%= targets[i].dataValues.id %>" value="허가<% if(targets[i].licensed == 1) { %>  취소<% } %>" />
+                  </div>
+                </td>
+              </tr>
+            <% } } else { %>
+              <tr class="bg-success text-center" style="font-size: 0.9rem;">
+                <td><%= target.id %></td>
+                <td><%= target.rank %></td>
+                <td><%= target.order %></td>
+                <td><%= target.user_id %></td>
+                <% var created = new Date(target.createdAt); %>
+                <td><%= `
+                  ${created.getFullYear().toString().padStart(4, '0')}-${
+                  (created.getMonth()+1).toString().padStart(2, '0')}-${
+                  created.getDate().toString().padStart(2, '0')}
+                   
+                  ${created.getHours().toString().padStart(2, '0')}:${
+                  created.getMinutes().toString().padStart(2, '0')}:${
+                  created.getSeconds().toString().padStart(2, '0')}` %></td>
+                  <% var updated = new Date(target.updatedAt); %>
+                  <td><%= `
+                    ${updated.getFullYear().toString().padStart(4, '0')}-${
+                    (updated.getMonth()+1).toString().padStart(2, '0')}-${
+                    updated.getDate().toString().padStart(2, '0')}
+                     
+                    ${updated.getHours().toString().padStart(2, '0')}:${
+                    updated.getMinutes().toString().padStart(2, '0')}:${
+                    updated.getSeconds().toString().padStart(2, '0')}` %></td>
+                <td><%= target.licensed %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% if(targets == undefined || null) { %>
+      <div class="row float-sm-right">
+        <!-- <div class="xs-col-auto">
+          <input type="button" class="btn btn-xs btn-info btn-block" aria-label="lookup-all" onclick="location.href = '../lookup-all';" value="직 전부" />
+        </div> -->
+      </div>
+      <% } %>
+      <div class="row">
+        <span class="text-muted mb-5">사용자별 직급부입니다.</span>
+      </div>
+    </div>
+    <%- include (includes("modal")) %>
+    <%- include (includes("footer")) %>
+  </body>
+  <%- include (includes("foot")); %>
+  <script type="text/javascript" src="/scripts/positioner.js"></script>
+</html>

@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="/"><%= headers("navbarTitle") %></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+      <% for(var l in headers("navigation")) { %>
+        <li class="nav-item _<%= l %>">
+          <a class="nav-link" href="/<%= l %>"><%= headers("navigation")[l]['title'] %></a>
+        </li>
+      <% } %>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item _home">
+        <a class="nav-link" href="/home">홈</a>
+      </li>
+      <script type="text/javascript">
+        <%# for (var i in session) { %>
+          console.log("<%#= i + " = " + session[i] %>");
+        <%# } %>
+      </script>
+      <% if(session && session.login == 1) { %>
+      <li class="nav-item _logout">
+        <a class="nav-link" href="/user/logout">로그아웃</a>
+      </li>
+      <li class="nav-item _lookup">
+        <a class="nav-link" href="/user/lookup">[<%= session.username %>]</a>
+      </li>
+      <% } else { %>
+      <li class="nav-item _login">
+        <a class="nav-link" href="/user/login">로그인</a>
+      </li>
+      <li class="nav-item _register">
+        <a class="nav-link" href="/user/register">회원가입</a>
+      </li>
+      <% } %>
+      <li class="nav-item _information">
+        <a class="nav-link" href="/information">안내</a>
+      </li>
+    </ul>
+  </div>
+</nav>

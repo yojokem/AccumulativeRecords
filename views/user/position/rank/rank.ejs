@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <%- include (includes("head")); %>
+</head>
+
+<body id="target" class="pt-5">
+  <%- include (includes("header")) %>
+  <div class="container pt-5 ml-auto mr-auto">
+    <div class="row float-sm-right">
+      <div class="col-xs-auto">
+        <input type="button" class="btn btn-secondary"
+          onclick="$('#addRankContainer').slideToggle(); $('#separator').toggle();" value="추가" data-toggle="button"
+          aria-pressed="false" autocomplete="off" />
+      </div>
+    </div>
+    <div class="w-100 pt-5"></div>
+    <div id="addPositionContainer" title="사용자 직급 추가" class="row" style="display: none; overflow-x: auto;">
+      <div class="xs-col-auto w-100">
+        <table class="table table-striped table-bordered"
+          style="width: 100%; min-width: 400px; border-collapse: collapse;">
+          <thead>
+            <tr class="text-center bg-primary text-white">
+              <th>순번</th>
+              <th>직위도(職位圖)</th>
+              <th>등급</th>
+              <th>사용자 아이디</th>
+              <th>허가</th>
+            </tr>
+          </thead>
+          <tbody>
+            <form name="addPositionForm" id="addPositionForm" action="/user/position/add" method="POST">
+              <tr class="text-center">
+                <td>□</td>
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="prank" id="prank" minlength="1" required readonly />
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="order" id="order" value="5" required />
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control col-xs-4" name="username" id="username" minlength="1" required />
+                    <div class="input-group-append">
+                      <select class="custom-select col-xs-auto" id="userGroupSelect" name="userGroupSelect">
+                        <option selected>(선택)</option>
+                        <!-- <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option> -->
+                      </select>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="licensed" name="licensed" />
+                    <label class="custom-control-label" for="licensed">
+                      허가
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right" colspan="10">
+                  <div class="ml-3 col-xs-3 float-sm-right">
+                    <input type="button" class="btn btn-block btn-secondary" id="closePosition" value="닫기" />
+                  </div>
+                  <div class="col-xs-auto float-sm-right">
+                    <input type="hidden" name="_csrf" value="<%= csrf %>" />
+                    <input type="button" class="btn btn-block" style="color: white; background-color: dimgray;"
+                      name="addPositionSubmit" id="addPositionSubmit" value="직급 추가" />
+                  </div>
+                </td>
+              </tr>
+            </form>
+          </tbody>
+        </table>
+      </div>
+      <div class="w-100 pt-1"></div>
+    </div>
+    <div id="addRankContainer" class="row" style="display: none; overflow-x: auto;">
+      <div class="xs-col-auto w-100">
+        <table class="table table-striped table-bordered"
+          style="width: 100%; min-width: 400px; border-collapse: collapse;">
+          <thead>
+            <tr class="text-center bg-primary text-white">
+              <th>순번</th>
+              <th>직위도(職位圖)</th>
+              <th>상하 등급</th>
+              <th>미사용 여부</th>
+              <th>생성일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <form name="addRankForm" id="addRankForm" action="/user/position/rank/add" method="POST">
+              <tr class="text-center">
+                <td>□</td>
+                <td>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="rank" id="rank" minlength="1" required />
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="level" id="level" value="20" required />
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="unuse" name="unuse" />
+                    <label class="custom-control-label" for="unuse">
+                      미사용
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <span id="currentTime"></span>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right" colspan="10">
+                  <div class="col-xs-auto float-sm-right">
+                    <input type="hidden" name="_csrf" value="<%= csrf %>" />
+                    <input type="button" class="btn btn-block" style="color: white; background-color: dimgray;"
+                      name="addRankSubmit" id="addRankSubmit" value="직위도 추가" />
+                  </div>
+                </td>
+              </tr>
+            </form>
+          </tbody>
+        </table>
+      </div>
+      <div class="w-100 pt-1"></div>
+    </div>
+    <div id="separator" class="w-100 pt-1 pb-2 border-top border-dark" style="display: none;"></div>
+    <div class="row" style="overflow-x: auto;">
+      <table class="table table-striped table-bordered table-hover"
+        style="width: 100%; min-width: 400px; border-collapse: collapse; overflow-x: auto;">
+        <caption>직위도(職位圖) 설정</caption>
+        <thead>
+          <tr class="text-center">
+            <th>순번</th>
+            <th>직위도(職位圖)</th>
+            <th>상하 등급</th>
+            <th>미사용 여부</th>
+            <th>생성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(targets) { for(var i in targets) { const id = targets[i].id; %>
+          <tr id="target_<%= id %>" class="bg-success text-center" style="font-size: 0.9rem;">
+            <td><%= id %></td>
+            <td class="prank"><%= targets[i].rank %></td>
+            <td><%= targets[i].level %></td>
+            <td><%= targets[i].unuse %></td>
+            <% var created = new Date(targets[i].createdAt); %>
+            <td><%= `
+                  ${created.getFullYear().toString().padStart(4, '0')}-${
+                  (created.getMonth()+1).toString().padStart(2, '0')}-${
+                  created.getDate().toString().padStart(2, '0')}
+                   
+                  ${created.getHours().toString().padStart(2, '0')}:${
+                  created.getMinutes().toString().padStart(2, '0')}:${
+                  created.getSeconds().toString().padStart(2, '0')}` %></td>
+          </tr>
+          <tr>
+            <td class="text-right" colspan="10">
+              <div class="btn-group col-xs-auto float-sm-right" role="group">
+                <input type="button"
+                  class="btn <% if(targets[i].unuse == 1) { %> btn-primary <% } else { %> btn-warning <% } %> btn-block unuse_btn"
+                  aria-label="unuse" id="unuse_btn" target="<%= targets[i].dataValues.id %>"
+                  value="미사용<% if(targets[i].unuse == 1) { %>  취소<% } %>" />
+                <input type="button" class="btn btn-dark" value="dd" />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="10" class="border border-dark">
+              <table class="table table-striped table-bordered table-hover" style="border-collapse: collapse;">
+                <thead>
+                  <tr class="text-center">
+                    <th>순번</th>
+                    <th>직위도(職位圖)</th>
+                    <th>등급</th>
+                    <th>허가</th>
+                    <th>사용자</th>
+                    <th>생성일</th>
+                    <th>수정일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% lower_targets = targets[i].RankS %>
+                  <% for(var i in lower_targets) { lower_target = lower_targets[i]; %>
+                  <tr id="license_target_<%= lower_target.id %>" class="bg-success text-center"
+                    style="font-size: 0.9rem;">
+                    <td><%= lower_target.id %></td>
+                    <td><%= lower_target.rank %></td>
+                    <td><%= lower_target.order %></td>
+                    <td><%= lower_target.licensed %></td>
+                    <td><%= lower_target.user.username %>(<%= lower_target.user_id %>)</td>
+                    <% var created = new Date(lower_target.createdAt); %>
+                    <td><%= `
+        ${created.getFullYear().toString().padStart(4, '0')}-${
+        (created.getMonth()+1).toString().padStart(2, '0')}-${
+        created.getDate().toString().padStart(2, '0')}
+         
+        ${created.getHours().toString().padStart(2, '0')}:${
+        created.getMinutes().toString().padStart(2, '0')}:${
+        created.getSeconds().toString().padStart(2, '0')}` %></td>
+                    <% var updated = new Date(lower_target.updatedAt); %>
+                    <td><%= `
+        ${updated.getFullYear().toString().padStart(4, '0')}-${
+        (updated.getMonth()+1).toString().padStart(2, '0')}-${
+        updated.getDate().toString().padStart(2, '0')}
+         
+        ${updated.getHours().toString().padStart(2, '0')}:${
+        updated.getMinutes().toString().padStart(2, '0')}:${
+        updated.getSeconds().toString().padStart(2, '0')}` %></td>
+                  </tr>
+                  <tr>
+                    <td class="text-right" colspan="10">
+                      <div class="col-xs-5 float-sm-right">
+                        <input type="button"
+                          class="btn <% if(lower_target.licensed == 1) { %> btn-warning <% } else { %> btn-primary <% } %> btn-block license_btn"
+                          aria-label="license" id="license_btn" target="<%= lower_target.dataValues.id %>"
+                          value="허가<% if(lower_target.licensed == 1) { %>  취소<% } %>" />
+                      </div>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+                <tbody>
+                  <tr>
+                    <td class="text-right" colspan="10">
+                      <div class="btn-group col-xs-auto float-sm-right" role="group">
+                        <input type="button" class="btn btn-dark addPosition" target="<%= id %>" data-toggle="button" aria-pressed="false" autocomplete="off" value="직급 추가" />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <% } } else { %>
+          <tr class="bg-success text-center" style="font-size: 0.9rem;">
+            <td><%= target.id %></td>
+            <td><%= target.rank %></td>
+            <td><%= target.level %></td>
+            <td><%= target.unuse %></td>
+            <% var created = new Date(target.createdAt); %>
+            <td><%= `
+                  ${created.getFullYear().toString().padStart(4, '0')}-${
+                  (created.getMonth()+1).toString().padStart(2, '0')}-${
+                  created.getDate().toString().padStart(2, '0')}
+                   
+                  ${created.getHours().toString().padStart(2, '0')}:${
+                  created.getMinutes().toString().padStart(2, '0')}:${
+                  created.getSeconds().toString().padStart(2, '0')}` %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% if(targets == undefined || null) { %>
+    <!-- <div class="row float-sm-right">
+        <div class="xs-col-auto">
+          <input type="button" class="btn btn-xs btn-info btn-block" aria-label="lookup-all" onclick="location.href = '../lookup-all';" value="직 전부" />
+        </div>
+      </div> -->
+    <% } %>
+    <div class="row mb-5">
+      <span class="text-muted mb-5">사용자별 직급부에서 사용되는 직위도(職位圖)입니다.</span>
+    </div>
+  </div>
+  <%- include (includes("modal")) %>
+  <%- include (includes("footer")) %>
+</body>
+<%- include (includes("foot")); %>
+<script type="text/javascript" src="/scripts/ranker.js"></script>
+<script type="text/javascript" src="/scripts/positioner.js"></script>
+
+</html>

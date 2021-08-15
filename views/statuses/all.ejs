@@ -1,0 +1,114 @@
+<%
+    const keys = [1, 2, 3];
+%>
+<div class="col-xs-4 ml-auto">
+    <input type="button" class="btn btn-block btn-primary btn-sm download all" target="0" value="엑셀" />
+</div>
+<% if(targets) for(var i in targets) { let target = targets[i]; %>
+<% if(i % 4 == 0) { %><div class="row pb-2 pt-3"><% } %>
+    <%
+        const limitOption = target.Limit.option;
+        const values = [];
+        for(let iii = 0; iii < keys.length; iii++) {
+            let pkk = keys[iii];
+            let key = pkk == 1 ? "first" : pkk == 2 ? "second" : "third";
+            let gradeLimit = limitOption[key];
+            values[iii] = target.applications.filter((v, n) => v.unuse == false && v.user.grade == pkk).length;
+        }
+    %>
+    <div class="border col-xs-4 ml-4" style="width: min-content;" <% if(target.active == false) { %>aria-disabled="true"
+        <% } %>>
+        <div class="thumbnail">
+            <img class="fix" src="/styles/300x200.png" alt="...">
+            <div class="pr-2 pl-2 pt-1 caption table-responsive-sm">
+                <h3 class="pb-2 circleT" onclick="location.href = '/status/<%= target.name %>'"><%= target.name %></h3>
+                <p><%= target.detail %></p>
+                <p>
+                    <small>
+                        <%= target.applications.filter((v, n) => v.unuse == false).length %> 신청 완료&nbsp;
+                        <%= target.maximal %> 최대 인원
+                    </small>
+                </p>
+                <p>
+                    <input type="button" class="btn btn-block btn-warning btn-sm unactive" target="<%= target.id %>"
+                        value="비활성화" />
+                    <input type="button" class="btn btn-block btn-primary btn-sm download" target="<%= target.id %>"
+                        value="엑셀" />
+                </p>
+                <p>
+                    <table class="table table-striped table-bordered table-hover table-sm"
+                        style="font-size: 0.8rem; width: 100%; border-collapse: collapse;">
+                        <caption>인원수</caption>
+                        <thead>
+                            <tr class="text-center">
+                                <th>분류</th>
+                                <th>1학년</th>
+                                <th>2학년</th>
+                                <th>3학년</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                                <td>설정</td>
+                                <% for (let io = 0; io < values.length; io++) { let key = io == 0 ? "first" : io == 1 ? "second" : "third"; %>
+                                <td <% if (values[io] >= limitOption[key]) { %>class="bg-success" <% } %>>
+                                    <%= limitOption[key] %></td><% } %>
+                            </tr>
+                            <tr>
+                                <td>현재</td>
+                                <% for (let io = 0; io < values.length; io++) { let key = io == 0 ? "first" : io == 1 ? "second" : "third"; %>
+                                <td <% if (values[io] >= limitOption[key]) { %>class="bg-success" <% } %>>
+                                    <%= values[io] %></td><% } %>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p>
+                <p>
+                    <table class="table table-striped table-bordered table-hover table-sm"
+                        style="font-size: 0.8rem; width: 100%; border-collapse: collapse;">
+                        <caption>신청자 명단</caption>
+                        <thead>
+                            <tr class="text-center">
+                                <th>학번</th>
+                                <th>성명</th>
+                                <th>인용</th>
+                                <th>취소</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <%
+                                {
+                                    let applications = target.applications;
+                                    for(var e in applications) {
+                                        let application = applications[e];
+
+                                        let unuse = application.unuse;
+                                        let accept = application.accept;
+
+                                        let GCNS = application.user.grade + (application.user.class + "").padStart(2, '0') + (application.user.number + "").padStart(2, '0');
+                                        let name = application.user.name;
+                            %>
+                            <tr <% if (unuse) { %>class="bg-dark text-light"
+                                <% } else if (accept) { %>class="bg-secondary" <% } %>>
+                                <td onclick="location.href = '/status/s/<%= application.user.username %>'"><%= GCNS %>
+                                </td>
+                                <td onclick="location.href = '/status/s/<%= application.user.username %>'"><%= name %>
+                                </td>
+                                <td class="clicks" onclick="location.href = '/force/accept/<%= application.id %>'">
+                                    <%= accept ? "인용" : "미정" %></td>
+                                <td class="clicks" onclick="location.href = '/force/unuse/<%= application.id %>'">
+                                    <%= unuse ? "취소" : "유효" %></td>
+                            </tr>
+                            <%
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </p>
+            </div>
+        </div>
+    </div>
+    <% if((Number(i) + 1) % 4 == 0 || targets.length == Number(i) + 1) { %></div><% } %>
+<% } %>
+<div class="row mb-5"></div>

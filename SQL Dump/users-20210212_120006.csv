@@ -1,0 +1,3 @@
+id,username,password,email,name,grade,class,number,position,authenticated,createdAt,updatedAt,deletedAt
+1,yojokem,67eea1b37e5fc916e01383fedc08a2f141019d7167cfcba6c1857e5ce0d045fa45d9c36c547e235a8ebcf572a8a8e030a9e40f1cc803c3a9aaa6690f2c6c19ee,yojokem@naver.com,김민성,1,7,2,정무청장,1,"2021-02-06 12:41:53","2021-02-06 12:41:53",NULL
+2,coveen,c18fa89710a590d145573bb7f539a69d5089819670f6d29512816944ce480217fa451d6ba8c0a12932acb1feaa96287f3e3925b8a759d86dff27180d7070d233,cbeen1003@gmail.com,박채빈,1,2,12,서기관,1,"2021-02-08 21:46:54","2021-02-10 03:06:38",NULL

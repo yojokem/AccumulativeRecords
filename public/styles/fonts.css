@@ -1,0 +1,59 @@
+@font-face {
+  font-family: appleB;
+  src: url(/fonts/AppleSDGothicNeoB.ttf);
+}
+
+@font-face {
+  font-family: appleM;
+  src: url(/fonts/AppleSDGothicNeoM.ttf);
+}
+
+@font-face {
+  font-family: appleR;
+  src: url(/fonts/AppleSDGothicNeoR.ttf);
+}
+
+@font-face {
+  font-family: appleSB;
+  src: url(/fonts/AppleSDGothicNeoSB.ttf);
+}
+
+@font-face {
+  font-family: scDream4;
+  src: url(/fonts/SCDream4.otf);
+}
+
+@font-face {
+  font-family: scDream5;
+  src: url(/fonts/SCDream5.otf);
+}
+
+@font-face {
+  font-family: scDream6;
+  src: url(/fonts/SCDream6.otf);
+}
+
+.__title {
+  font-family: appleB !important;
+}
+
+.__contextTitle {
+  font-family: appleM !important;
+}
+
+.__text {
+  font-family: appleR !important;
+}
+
+.__sText {
+  font-family: scDream5 !important;
+}
+
+.__sTitle {
+  font-family: scDream6 !important;
+}
+
+body {
+  font-family: appleR, "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-sans-serif: appleR, "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}

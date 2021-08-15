@@ -1,0 +1,36 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Police68194818!",
+    "database": "sodamhs",
+    "host": "34.64.144.143",
+    "dialect": "mysql",
+    "dialectOptions": {
+      "charset": "utf8mb4",
+      "dateStrings": true,
+      "typeCast": true
+    },
+    "timezone": "+09:00"
+  },
+  "test": {
+    "username": "root",
+    "password": "Police68194818!",
+    "database": "sodamhs",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "6hsxZnprms",
+    "password": "0aMWGWjqmU",
+    "database": "6hsxZnprms",
+    "host": "remotemysql.com",
+    "dialect": "mysql",
+    "dialectOptions": {
+      "charset": "utf8mb4",
+      "dateStrings": true,
+      "typeCast": true
+    },
+    "timezone": "+09:00"
+  }
+}
+

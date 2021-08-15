@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <%- include (includes("head")); %>
+  </head>
+  <body id="target" class="pt-5">
+    <%- include (includes("header")) %>
+    <div class="container pt-5 ml-auto mr-auto">
+      <div class="row">
+        <div class="col-xs-auto ml-auto mr-auto">
+          <h3 class="__title"><%= boardTitle %></h3>
+        </div>
+      </div>
+      <div class="row pt-3" style="overflow-x: auto;">
+        <table class="table table-striped table-bordered table-hover" style="width: 100%; min-width: 600px;">
+          <caption><%= boardTitle %> | 게시판</caption>
+          <thead>
+            <tr class="text-center">
+              <th style="width: 8%;">순번</th>
+              <th>제목</th>
+              <th style="width: 16%;">작성자</th>
+              <th style="width: 16%;">작성일</th>
+              <th style="width: 10%;">조회 수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (a in target) { %>
+              <tr class="text-center targets" onclick="window.location.href = '<%= parent %>/view/<%= target[a].dataValues.id %>'">
+                <td class="align-middle"><%= target[a].dataValues.id %></td>
+                <td class="align-middle"><%= target[a].dataValues.title %></td>
+                <td class="user_id align-middle"><%= target[a].user.username %></td>
+                <% var created = new Date(target[a].dataValues.createdAt); %>
+                <td class="align-middle"><%= `
+                  ${created.getFullYear().toString().padStart(4, '0')}-${
+                  (created.getMonth()+1).toString().padStart(2, '0')}-${
+                  created.getDate().toString().padStart(2, '0')}
+                   
+                  ${created.getHours().toString().padStart(2, '0')}:${
+                  created.getMinutes().toString().padStart(2, '0')}:${
+                  created.getSeconds().toString().padStart(2, '0')}` %></td>
+                <td class="viewCounts align-middle"><%= target[a].PostID.length %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <div class="pb-5">
+        <div class="row float-sm-right">
+          <div class="xs-col-auto">
+            <input type="button" class="btn btn-xs btn-block btn-dark" aria-label="write" onclick="location.href = '<%= parent %>/write';" value="글쓰기" />
+          </div>
+        </div>
+        <div class="row">
+          <small class="text-muted mb-5">자유롭게 글을 작성하고 열람할 수 있습니다.</small>
+        </div>
+      </div>
+    </div>
+    <%- include (includes("modal")) %>
+    <%- include (includes("footer")) %>
+  </body>
+  <%- include (includes("foot")); %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      /*$(".user_id").each((index, item) => {
+        var user_id = Number(item.innerText);
+        $.ajax({
+          url: "/user/number/" + user_id,
+          method: "GET"
+        })
+        .done(f => item.innerText = f)
+        .fail((xhr, status, errorThrown) => console.log(xhr + "|" + status + "|" + errorThrown))
+        .always((xhr, status) => console.log("Request has completed user check of #" + index));
+      });
+
+      $(".targets").each((index, item) => {
+        var post_id = Number(item.children[0].innerText);
+        $.ajax({
+          url: "/post/browses/" + post_id,
+          method: "GET"
+        })
+        .done(f => item.children[4].innerText = f)
+        .fail((xhr, status, errorThrown) => console.log(xhr + "|" + status + "|" + errorThrown))
+        .always((xhr, status) => console.log("Request has completed post view counts check of #" + index));
+      });*/
+    });
+  </script>
+</html>

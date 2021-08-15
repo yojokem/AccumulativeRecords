@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <%- include (includes("head")); %>
+  </head>
+  <body id="target" class="pt-5">
+    <%- include (includes("header")) %>
+    <div class="container pt-5 ml-auto mr-auto">
+      <div class="row">
+        <form name="manualRegister" id="manualRegister" role="form" action="/user/manual" method="POST" enctype="multipart/form-data">
+          <div class="input-group input-group-sm col-xs-4">
+            <label for="file" class="col-sm-4 col-form-label">사용자 엑셀 파일</label>
+            <input type="file" class="col-sm-auto form-control" name="file" id="file" value="파일" />
+            <input type="submit" class="btn btn-sm btn-primary" name="submitButton" value="생성" />
+          </div>
+        </form>
+        <div class="col-xs-4"><a href="#" onclick="location.href = '/user/loginable'" role="button" class="btn">로그인 상태 전환</a></div>
+        <div class="w-100 border-bottom pt-1 pb-1"></div>
+      </div>
+      <div class="row pt-1 mb-2" style="overflow-x: auto;">
+        <table class="table table-striped table-bordered table-hover" style="width: 100%; min-width: 400px; border-collapse: collapse;">
+          <caption>사용자 색인 <% if(targets != undefined || null) { %>[등록부 전부]<% } else { %>[<%= target.username %>]<% } %></caption>
+          <thead>
+            <tr class="text-center">
+              <th>순번</th>
+              <th>아이디</th>
+              <th>이메일</th>
+              <th>성명</th>
+              <th>학년</th>
+              <th>반</th>
+              <th>번호</th>
+              <th>지위</th>
+              <th>가입일</th>
+              <th>인증 여부</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(targets) { for(var i in targets) { %>
+              <tr id="target_<%= targets[i].id %>" class="bg-success text-center" style="font-size: 0.9rem;">
+                <td><%= targets[i].dataValues.id %></td>
+                <td><%= targets[i].dataValues.username %></td>
+                <td><%= targets[i].dataValues.email %></td>
+                <td><%= targets[i].dataValues.name %></td>
+                <td><%= targets[i].dataValues.grade %></td>
+                <td><%= targets[i].dataValues.class %></td>
+                <td><%= targets[i].dataValues.number %></td>
+                <td><%= targets[i].dataValues.position %></td>
+                <% var created = new Date(targets[i].dataValues.createdAt); %>
+                <td><%= `
+                  ${created.getFullYear().toString().padStart(4, '0')}-${
+                  (created.getMonth()+1).toString().padStart(2, '0')}-${
+                  created.getDate().toString().padStart(2, '0')}
+                   
+                  ${created.getHours().toString().padStart(2, '0')}:${
+                  created.getMinutes().toString().padStart(2, '0')}:${
+                  created.getSeconds().toString().padStart(2, '0')}` %></td>
+                <td><%= targets[i].dataValues.authenticated %></td>
+              </tr>
+              <tr>
+                <td class="text-right" colspan="10">
+                  <div class="col-xs-5 float-sm-right">
+                    <input type="button" class="btn <% if(targets[i].authenticated == 1) { %> btn-warning <% } else { %> btn-primary <% } %> btn-block authenticate_btn" aria-label="authenticate" id="authenticate_btn" target="<%= targets[i].dataValues.id %>" value="인증<% if(targets[i].authenticated == 1) { %> 해제<% } %>" />
+                  </div>
+                </td>
+              </tr>
+            <% } } else { %>
+              <tr class="bg-success text-center" style="font-size: 0.9rem;">
+                <td><%= target.id %></td>
+                <td><%= target.username %></td>
+                <td><%= target.email %></td>
+                <td><%= target.name %></td>
+                <td><%= target.grade %></td>
+                <td><%= target.class %></td>
+                <td><%= target.number %></td>
+                <td><%= target.position %></td>
+                <% var created = new Date(target.createdAt); %>
+                <td><%= `
+                  ${created.getFullYear().toString().padStart(4, '0')}-${
+                  (created.getMonth()+1).toString().padStart(2, '0')}-${
+                  created.getDate().toString().padStart(2, '0')}
+                   
+                  ${created.getHours().toString().padStart(2, '0')}:${
+                  created.getMinutes().toString().padStart(2, '0')}:${
+                  created.getSeconds().toString().padStart(2, '0')}` %></td>
+                <td><%= target.authenticated %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <% if(targets == undefined || null) { %>
+      <div class="row float-sm-right">
+        <div class="xs-col-auto">
+          <input type="button" class="btn btn-xs btn-info btn-block" aria-label="lookup-all" onclick="location.href = '../lookup-all';" value="등록부 전부" />
+        </div>
+      </div>
+      <% } %>
+      <div class="row">
+        <span class="text-muted mb-5">분실 등으로 인한 비밀번호 변경은 정무청 기록물관리과 또는 내정역사부에 신청하셔야 합니다.</span>
+      </div>
+    </div>
+    <%- include (includes("modal")) %>
+    <%- include (includes("footer")) %>
+  </body>
+  <%- include (includes("foot")); %>
+  <script type="text/javascript" src="/scripts/profiler.js"></script>
+</html>

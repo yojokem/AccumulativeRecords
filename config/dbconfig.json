@@ -1,0 +1,16 @@
+{
+  "development": {
+    "user": "root",
+    "password": "Police68194818!",
+    "database": "inteltasks",
+    "host": "127.0.0.1",
+    "port": 33060
+  },
+  "pool": {
+    "pooling": {
+      "maxSize": 20,
+      "maxIdleTime": 1000,
+      "queueTimeout": 2000
+    }
+  }
+}

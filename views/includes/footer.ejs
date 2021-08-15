@@ -1,0 +1,31 @@
+<%
+
+  if(typeof footer_left == "undefined") {
+    footer_left = '<small>' + link + '</small>'
+  }
+  
+  if(typeof footer_right == "undefined") {
+    footer_right = ""
+  }
+
+%>
+<footer class="fixed-bottom py-2 text-center bg-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="xs-col-auto float-sm-left">
+        <%- footer_left %>
+      </div>
+      <div class="ml-auto mr-auto xs-col-6 float-sm-center">2020 &#169; <span style="font-family: appleSB">소담고등학교</div>
+      <div class="xs-col-auto float-sm-right">
+        <%- footer_right %>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<% // footer 부분의 left, right 부분은 next handle을 위하여 초기화(삭제)
+
+  delete footer_left
+  delete footer_right
+
+%>

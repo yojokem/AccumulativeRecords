@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <%- include (includes("head")); %>
+    <script src="/scripts/sha512.min.js" charset="utf-8"></script>
+    <script src="/scripts/credentials.js" charset="utf-8"></script>
+  </head>
+  <body id="target" class="pt-5 py-5">
+    <%- include (includes("header")) %>
+    <div class="container pt-3">
+      <div class="row">
+        <div class="ml-auto mr-auto w-50 pt-5 py-2">
+          <form name="registerForm" id="registerForm" role="form" method="post" action="/user/register">
+            <div class="text-center mb-4">
+              <h1 class="h3 __contextTitle">시스템 가입</h1>
+            </div>
+            <div class="input-group pt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="usernameIG">아이디</span>
+              </div>
+              <input id="username" name="username" class="form-control" type="text" placeholder="아이디" required maxlength="20" autofocus="" aria-label="아이디" aria-describedby="usernameIG" />
+            </div>
+            <div class="input-group pt-1 mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="passwordIG">비밀번호</span>
+              </div>
+              <input id="password" name="password" class="form-control" type="password" placeholder="비밀번호" required aria-label="비밀번호" aria-describedby="passwordIG" />
+            </div>
+            <div class="input-group pt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="emailIG">이메일</span>
+              </div>
+              <input id="email" name="email" class="form-control" type="email" placeholder="이메일" maxlength="40" required aria-label="이메일" aria-describedby="emailIG" />
+            </div>
+            <div class="input-group pt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="nameIG">성명</span>
+              </div>
+              <input id="name" name="name" class="form-control" type="text" placeholder="성명" maxlength="5" required aria-label="성명" aria-describedby="nameIG" />
+            </div>
+            <div class="input-group pt-1 mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="nicknameIG">닉네임</span>
+              </div>
+              <input id="nickname" name="nickname" class="form-control" type="text" placeholder="닉네임" minlength="2" maxlength="20" required aria-label="닉네임" aria-describedby="nicknameIG" />
+            </div>
+            <div class="input-group pt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="gradeIG">학년</span>
+              </div>
+              <input id="grade" name="grade" class="form-control" type="number" placeholder="학년" min="1" max="3" required aria-label="학년" aria-describedby="gradeIG" />
+            </div>
+            <div class="input-group pt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="classIG">반</span>
+              </div>
+              <input id="class" name="class" class="form-control" type="number" placeholder="반" required aria-label="반" aria-describedby="classIG" />
+            </div>
+            <div class="input-group pt-1 mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="numberIG">번호</span>
+              </div>
+              <input id="number" name="number" class="form-control" type="number" placeholder="번호" required aria-label="번호" aria-describedby="numberIG" />
+            </div>
+            <div class="input-group pt-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="positionIG">직위</span>
+              </div>
+              <input id="position" name="position" class="form-control" type="text" placeholder="직위" maxlength="10" aria-label="직위" aria-describedby="positionIG" />
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrf %>" />
+            <small class="mb-5 mb-3 text-muted text-center">직위의 경우 담당자 확인 후 임의 수정될 수 있음.</small>
+            <div class="pt-5">
+            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="register()">가입 신청</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <%- include (includes("modal")) %>
+    <%- include (includes("footer")) %>
+  </body>
+  <%- include (includes("foot")); %>
+</html>

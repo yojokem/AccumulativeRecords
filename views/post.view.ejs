@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <%- include (includes("head")); %>
+    <style type="text/css">
+    .break {
+      flex-basis: 100%;
+    }
+    </style>
+  </head>
+  <body id="target" class="pt-5">
+    <%- include (includes("header")) %>
+    <div class="container pt-5 ml-auto mr-auto">
+      <div class="row">
+        <div class="col-xs-auto ml-auto mr-auto">
+          <h4 class="__title"><%= boardTitle %></h3>
+        </div>
+      </div>
+      <div class="container row pt-4" style="overflow-x: auto;">
+        <div class="row mt-1 ml-3 mr-3 p-3 w-100 border-bottom border-primary">
+            <div class="col-xs-3 pl-2 pr-2 bg-secondary"><%= target.dataValues.id %></div>
+            <div class="ml-2 col-xs-auto h4 __sTitle">
+              <%= target.dataValues.title %>
+              <div class="col-xs-auto h6 __text"><%= target.user.username %></div>
+            </div>
+            <div class="ml-2 col-xs-2 __contextTitle ml-auto mt-1">
+                작성일 <% var created = new Date(target.dataValues.createdAt) %>
+                <%= `
+                ${created.getFullYear().toString().padStart(4, '0')}-${
+                (created.getMonth()+1).toString().padStart(2, '0')}-${
+                created.getDate().toString().padStart(2, '0')}
+                 
+                ${created.getHours().toString().padStart(2, '0')}:${
+                created.getMinutes().toString().padStart(2, '0')}:${
+                created.getSeconds().toString().padStart(2, '0')}`
+                %>
+                <div class="w-100"></div>
+                최종 수정일 <% var updated = new Date(target.dataValues.updatedAt) %>
+                <%= `
+                ${updated.getFullYear().toString().padStart(4, '0')}-${
+                (updated.getMonth()+1).toString().padStart(2, '0')}-${
+                updated.getDate().toString().padStart(2, '0')}
+                 
+                ${updated.getHours().toString().padStart(2, '0')}:${
+                updated.getMinutes().toString().padStart(2, '0')}:${
+                updated.getSeconds().toString().padStart(2, '0')}`
+                %>
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div id="content" class="row pt-2 ml-3 mr-3 p-5">
+            <%- target.dataValues.content %>
+        </div>
+      </div>
+      <div class="row pt-5">
+        <div class="col-xs-auto mr-auto float-sm-left">
+            <div class="xs-col-auto">
+              <input type="button" class="btn btn-xs btn-block btn-dark" aria-label="goBack" onclick="window.history.go(-1);" value="이전으로" />
+            </div>
+          </div>
+        <div class="col-xs-auto ml-auto float-sm-right">
+            <div class="xs-col-auto">
+              <input type="button" class="btn btn-xs btn-block btn-dark" aria-label="write" onclick="location.href = '<%= parent %>/write';" value="글쓰기" />
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <small class="text-muted mb-5"></small>
+      </div>
+    </div>
+    <%- include (includes("modal")) %>
+    <%- include (includes("footer")) %>
+  </body>
+  <%- include (includes("foot")); %>
+  <script type="text/javascript">
+  $("#content").css("flex-wrap", "wrap");
+  $("#content").css("white-space", "pre-wrap");
+  $("#content").css("word-break", "break-all");
+  $("#content").children("p").addClass("break");
+  $("#content").children("p").filter(function(index) {
+    return $("#content").children("p")[index].innerText.trim() == ""
+  }).addClass("w-100")
+  </script>
+</html>
